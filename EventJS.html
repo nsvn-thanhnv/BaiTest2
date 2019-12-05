@@ -23,6 +23,7 @@
                 event.stopPropagation();
                 //thêm dòng bên dưới để ngăn function khác thực thi trên cùng 1 nút
                 event.stopImmediatePropagation();
+                return false;
             }
 
             function b() {
@@ -31,24 +32,34 @@
 
             function a1() {
                 console.log("Thanh");
+                //return false;
             }
 
             // dùng jquery
-            $("button").on("click", a);
-            $("button").on("click", a1);
+            $("div").on("click", "button", a);
+            $("div").on("click", "button", a1);
             $("div").on("click", b);
+
+            //gỡ function b ra khỏi event
+            $("div").off("click", b);
+
             $("#bottom").on("click", function name() {
                 $("#test").html(Math.random());
             })
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-            //Tìm thẻ HTML theo cú pháp của Selector CSS
-            document.querySelector("button").addEventListener('click', function c() {
-                console.log("Hi");
-                event.stopPropagation();
-            });
-            document.querySelector("div").addEventListener('click', function d() { console.log("Everybody") });
+            // //Tìm thẻ HTML theo cú pháp của Selector CSS
+            // document.querySelector("button").addEventListener('click', function c() {
+            //     console.log("Hi");
+            //     // thêm dòng bên dưới để không ảnh hưởng đến container chứa nó
+            //     event.stopPropagation();
+            //     event.stopImmediatePropagation();
+            // });
+            // document.querySelector("div").addEventListener('click', function d() { console.log("Everybody") });
+
+            // gỡ function ra khỏi event
+            //document.querySelector("div").removeEventListener('click', function d() { console.log("Everybody") });
 
             //truy vấn theo id
             document.addEventListener("mousemove", function () {
@@ -64,6 +75,7 @@
         <div>
             <button>Click Me !</button>
         </div>
+        <p></p>
         <p id="bottom"><a href="#">Click here!</a></p>
         <p id="test" class="test"></p>
     </center>
