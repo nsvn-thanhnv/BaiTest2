@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Event JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        //thời điểm hợp lí để binding event là khi đã tồn tại phần tử muốn ghắn sự kiện
+
+        //Các cách truy vấn 1 element:
+        //Tìm thẻ HTML theo ID
+        document.getElementById("title");
+        //Tìm thẻ HTML theo tên của thẻ HTML
+        document.getElementsByTagName("button");
+        //Tìm thẻ HTML theo class
+        document.getElementsByClassName("test");
+
+        $(document).ready(function () {
+            function a(event) {
+                console.log("Hello");
+                // thêm dòng bên dưới để không ảnh hưởng đến container chứa nó
+                event.stopPropagation();
+                //thêm dòng bên dưới để ngăn function khác thực thi trên cùng 1 nút
+                event.stopImmediatePropagation();
+            }
+
+            function b() {
+                console.log("World");
+            }
+
+            function a1() {
+                console.log("Thanh");
+            }
+
+            // dùng jquery
+            $("button").on("click", a);
+            $("button").on("click", a1);
+            $("div").on("click", b);
+            $("#bottom").on("click", function name() {
+                $("#test").html(Math.random());
+            })
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            //Tìm thẻ HTML theo cú pháp của Selector CSS
+            document.querySelector("button").addEventListener('click', function c() {
+                console.log("Hi");
+                event.stopPropagation();
+            });
+            document.querySelector("div").addEventListener('click', function d() { console.log("Everybody") });
+
+            //truy vấn theo id
+            document.addEventListener("mousemove", function () {
+                document.getElementById("title").innerHTML = "Hello World";
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <center>
+        <p id="title">Title</p>
+        <div>
+            <button>Click Me !</button>
+        </div>
+        <p id="bottom"><a href="#">Click here!</a></p>
+        <p id="test" class="test"></p>
+    </center>
+</body>
+
+</html>
